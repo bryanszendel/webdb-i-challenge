@@ -31,4 +31,21 @@ server.get('/accounts/:id', (req, res) => {
     })
 })
 
+server.post('/accounts', (req, res) => {
+  const newAccount = req.body
+  db('accounts').insert(newAccount, 'id')
+    .then(([id]) => {
+      db('accounts')
+        .where({ id })
+        .first()
+        .then(post => {
+          res.status(201).json(post)
+        })
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+
+})
+
 module.exports = server;
