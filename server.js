@@ -61,7 +61,12 @@ server.put('/accounts/:id', (req, res) => {
 })
 
 server.delete('/accounts/:id', (req, res) => {
-
+  db('accounts')
+    .where({id: req.params.id})
+    .del()
+    .then(count => {
+      res.status(200).json({ message: `Successfully deleted ${count} records(s).`})
+    })
 })
 
 module.exports = server;
