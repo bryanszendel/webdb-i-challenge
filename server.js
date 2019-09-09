@@ -18,4 +18,17 @@ server.get('/accounts', (req, res) => {
     })
 })
 
+server.get('/accounts/:id', (req, res) => {
+  const { id } = req.params
+  db('accounts')
+    .where({ id })
+    .first()
+    .then(account => {
+      res.status(200).json(account)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
 module.exports = server;
