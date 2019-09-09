@@ -45,6 +45,22 @@ server.post('/accounts', (req, res) => {
     .catch(err => {
       res.status(500).json(err)
     })
+})
+
+server.put('/accounts/:id', (req, res) => {
+  const changes = req.body
+  db('accounts')
+    .where('id', req.params.id)
+    .update(changes)
+    .then(count => {
+      res.status(200).json({ message: `Successfully updated ${count} record(s).`})
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
+})
+
+server.delete('/accounts/:id', (req, res) => {
 
 })
 
